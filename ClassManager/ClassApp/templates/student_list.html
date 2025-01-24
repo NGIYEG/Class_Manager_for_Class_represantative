@@ -1,0 +1,67 @@
+
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Students List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    {% comment %} <img src="{% static 'images/background.jpg' %}" alt="Description of image"> {% endcomment %}
+    <script src="{% static 'js/event.js' %}"></script>
+    
+</head>
+<body class="bg-light">
+    <div class="container py-5">
+        {% comment %} <h1 class="mb-4">Students List</h1> {% endcomment %}
+        <div class="card shadow">
+            <div class="card-body">
+                <!-- Students Table -->
+                <h3 class="text-secondary mb-3">All Students</h3>
+                <table class="table table-bordered table-striped">
+                    <thead class="table-success">
+                        <tr>
+                            <th>#</th>
+                            <th>Student Name</th>
+                            <th>Registration Number</th>
+                            <th>Contact</th>
+                            <th>Registered Units</th>
+                            <th>Unit Codes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.registration_number }}</td>
+                            <td>{{ student.contact }}</td>
+                            <td>
+                                {% for unit in student.units.all %}
+                                    {{ unit.name }}<br>
+                                {% empty %}
+                                    No registered units
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% for unit in student.units.all %}
+                                    {{ unit.code }}<br>
+                                {% empty %}
+                                    N/A
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center">No students available</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <a href="/" class="btn btn-secondary mt-4" id="hover-button"style="background-color:rgb(10, 26, 21);" >Back to Home</a>
+    </div>
+    
+</body>
+</html>
